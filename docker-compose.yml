@@ -1,0 +1,21 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "${HOST_PORT:-8080}:8080"
+    environment:
+      DB_PATH: /data/catalog.db
+      ARCHIVE_PATH: /archive
+      LISTEN_ADDR: :8080
+      CURSEFORGE_API_KEY: ${CURSEFORGE_API_KEY:-}
+      CLIENT_VERSION: ${CLIENT_VERSION:-}
+    volumes:
+      - db_data:/data
+      - archive_data:/archive
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  archive_data:
